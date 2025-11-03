@@ -715,30 +715,30 @@ class InputMachine(ExecuteMachine):
             extra={"out_reg": out_reg, "voltage": voltage},
         )
 
-    def _cmd_save_sender_dist_and_freq(self, out_reg1, out_reg2):
+    def _cmd_save_phase_ang_and_diff(self, out_reg1, out_reg2):
         """
-        Command that saves the distance from and the frequency of the sender to a register.
+        Command that saves the phase angle and phase difference between sender and a tag.
 
         Args:
-            out_reg1 (int): Output register for distance.
-            out_reg2 (int): Output register for frequency.
+            out_reg1 (int): Output register for phase angle.
+            out_reg2 (int): Output register for phase difference.
         """
-        distance, sender_frequency = self.tag_machine.tag.read_sender_dist_and_freq()
-        distance = self.registers[out_reg1] = distance
+        phase_angle, phase_difference = self.tag_machine.tag.read_phase_ang_and_diff()
+        phase_angle = self.registers[out_reg1] = phase_angle
         self.logger().debug(
-	        "cmd_save_sender_dist_and_freq(%s): reg[%s] = %s",
+	        "cmd_save_phase_ang_and_diff(%s): reg[%s] = %s",
 	        out_reg1,
 	        out_reg1,
-	        distance,
-	        extra={"out_reg": out_reg1, "distance from sender": distance},
+	        phase_angle,
+	        extra={"out_reg": out_reg1, "phase angle": phase_angle},
         )
-        sender_frequency = self.registers[out_reg2] = sender_frequency
+        phase_difference = self.registers[out_reg2] = phase_difference
         self.logger().debug(
-	        "cmd_save_sender_dist_and_freq(%s): reg[%s] = %s",
+	        "cmd_save_phase_ang_and_diff(%s): reg[%s] = %s",
 	        out_reg2,
 	        out_reg2,
-	        sender_frequency,
-	        extra={"out_reg": out_reg2, "sender frequency": sender_frequency},
+	        phase_difference,
+	        extra={"out_reg": out_reg2, "phase difference": phase_difference},
         )
 
     def _cmd_send_bit(self, reg: int):

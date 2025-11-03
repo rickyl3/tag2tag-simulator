@@ -66,3 +66,33 @@ class TagManager:
             voltate (float): The received voltage.
         """
         return self.physics_engine.voltage_at_tag(self.tags, asking_tag)
+
+    def get_phase_ang_and_diff(self, asking_receiver: Tag) -> (float, float):
+	    """
+	    Calculates the phase angle and phase difference between the sender and a tag.
+	    Assumes 1 sender and that all receivers are ordered alphabetically.
+	    # TODO: Is there a way to make this not an assumption? <- LOW PRIORITY
+
+	    Args:
+	        asking_receiver (str): The tag.
+
+	    Returns:
+	        phase_ang (float): The phase angle.
+	        phase_diff (float): The phase difference.
+	    """
+	    # asking_sender = self.tags[name]
+	    tagz = list(self.tags.values())
+	    asking_sender = None
+	    for tag in tagz:
+		    if tag.tag_machine.input_machine.state.name == "EMPTY":
+			    asking_sender = tag
+			    break # The first sender alphabetically is picked by default.
+
+	    prev_receiver = asking_receiver;
+	    for x in range(1, len(tagz)):
+		    if tagz[x] == asking_receiver:
+			    if tagz[x - 1].tag_machine.input_machine.state.name == "EMPTY":
+				    break # No senders, please!
+			    prev_receiver = tagz[x - 1]
+			    break
+	    return self.physics_engine.phase_ang_and_diff(asking_sender, asking_receiver, prev_receiver)

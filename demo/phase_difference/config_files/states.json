@@ -209,10 +209,10 @@
                         "sequence",
                         [
                             "_comment",
-                            "store baseline sender distance in register 0 and frequency in register 4"
+                            "store baseline phase angle and phase difference in register 0, 4"
                         ],
                         [
-                            "save_sender_dist_and_freq",
+                            "save_phase_ang_and_diff",
                             0,
 	                        4
                         ],
@@ -251,10 +251,10 @@
                         "sequence",
                         [
                             "_comment",
-                            "store read sender distance and frequency in register 3, 5"
+                            "store read phase angle and phase difference in register 3, 5"
                         ],
                         [
-                            "save_sender_dist_and_freq",
+                            "save_phase_ang_and_diff",
                             3,
 	                        5
                         ],

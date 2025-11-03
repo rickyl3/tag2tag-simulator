@@ -276,3 +276,29 @@ class PhysicsEngine:
         tx.set_mode(original_mode)
 
         return abs(v1 - v0)
+
+    def phase_ang_and_diff(self, tx: Tag, rx: Tag, pre_rx: Tag) -> []:
+	    frequency = tx.get_frequency()
+	    lambda_freq = c / frequency
+
+	    dx = tx.pos[0] - rx.pos[0]
+	    dy = tx.pos[1] - rx.pos[1]
+	    dz = tx.pos[2] - rx.pos[2]
+	    distance = ((dx ** 2) + (dy ** 2) + (dz ** 2)) ** 0.5
+	    phase_angle = (2 * pi * distance) / lambda_freq
+
+	    prev_dx = tx.pos[0] - pre_rx.pos[0]
+	    prev_dy = tx.pos[1] - pre_rx.pos[1]
+	    prev_dz = tx.pos[2] - pre_rx.pos[2]
+	    prev_distance = ((prev_dx ** 2) + (prev_dy ** 2) + (prev_dz ** 2)) ** 0.5
+	    phase_difference = (2 * pi * (distance - prev_distance)) / lambda_freq
+
+	    # TODO: Do the calculations here and whatnot: SciPy may have you covered!
+
+
+
+	    return phase_angle, phase_difference
+
+
+
+

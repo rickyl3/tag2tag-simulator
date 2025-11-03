@@ -28,14 +28,14 @@
         }
     },
     "Objects": {
-	    "Sender": {
+	    "MySuperCoolSender": {
             "tag_machine": {
                 "input_machine": "EMPTY",
                 "processing_machine": "sender_processing_0",
                 "output_machine": "sender_output_0"
             },
             "x": 1.5,
-            "y": 0.1,
+            "y": 0.0,
             "z": 0.0,
             "power": 0,
             "gain": 0,
