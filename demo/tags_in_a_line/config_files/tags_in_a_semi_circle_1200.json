@@ -5,6 +5,7 @@
         "gain": 0,
         "impedance": 50.0,
         "frequency": 900000000.0,
+        "passive_ref_mag": 0.0,
         "input_machine_id": "receiver_input_0",
         "proccessing_machine_id": "receiver_processing_0",
         "output_machine_id": "receiver_output_0",
