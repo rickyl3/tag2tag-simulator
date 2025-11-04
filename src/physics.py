@@ -34,8 +34,8 @@ class PhysicsEngine:
     def __init__(
         self,
         exciters: dict[str, Exciter],
-        default_power_on_dbm: float = -100.0,  # TODO make this configurable per-tag and find a good default
-        noise_std_volts: float = 0,  # 0.0001 is 0.1 mV noise,
+        default_power_on_dbm: float = -100.0,
+        noise_std_volts: float = 0,
         passive_ref_mag: float = 0,
     ):
         """
@@ -59,7 +59,7 @@ class PhysicsEngine:
             "Gamma": None,
             "h_exciter": None,
             "S": None,
-            "hash": None,  # unique snapshot of topology + reflection coeffs
+            "hash": None,
         }
 
     def attenuation(
@@ -75,8 +75,6 @@ class PhysicsEngine:
             rx_gain (float): Receiving antenna gain in dBi.
         Returns:
             float: Power ratio (unitless) between transmitted and received power.
-
-        # TODO Add Radiating near-field model (1/d^3) for distances < wavelength/(2*pi) (NOT HIGH PRIORITY)
         """
         if distance <= 0:
             return 0.0
@@ -112,9 +110,7 @@ class PhysicsEngine:
         distance = dist.euclidean(tx.get_position(), rx.get_position())
         wavelen = c / tx.get_frequency()
         att = sqrt(self.attenuation(distance, wavelen, tx.get_gain(), rx.get_gain()))
-        return att * (
-            cmath.exp(1j * 2 * pi * distance / wavelen)
-        )  # Use Cmath for e not e from scipy
+        return att * cmath.exp(1j * 2 * pi * distance / wavelen)
 
     def power_from_exciters_at_tag_mw(self, tag: Tag) -> float:
         """
@@ -124,12 +120,6 @@ class PhysicsEngine:
             tag (Tag): The receiving tag.
         Returns:
             float: The power (in mW) delivered to the tag.
-
-        Assumptions:
-            - exciter.get_power() returns transmit power in mW
-            - gains are linear directivities (not dBi). If gain is provided in dBi, convert before using.
-
-        # TODO Check if gains are in linear directivities or dBi(if DBI, convert to linear)
         """
         exs = self.exciters
         power_rxs = 0.0
@@ -145,6 +135,7 @@ class PhysicsEngine:
                 distance, wavelength, ex.get_gain(), tag.get_gain()
             )
             power_rxs += max(power_rx, 0.0)
+            break 
         return power_rxs
 
     def is_tag_powered(self, tag: Tag) -> bool:
@@ -155,25 +146,21 @@ class PhysicsEngine:
             tag (Tag): The tag to check.
         Returns:
             bool: True if the tag is powered, False otherwise.
-
-        Checks for:
-            - per-tag attribute `power_on_threshold_dbm` (if present)
-            - otherwise uses engine.default_power_on_dbm
         """
         power_tag_mw = self.power_from_exciters_at_tag_mw(tag)
         power_tag_dbm = mW_to_dBm(power_tag_mw)
         threshold_dbm = getattr(
             tag, "power_on_threshold_dbm", self.default_power_on_dbm
-        )  # TODO Add power_on_threshold_dbm to Tag class
+        )
         return power_tag_dbm >= threshold_dbm
 
     def effective_reflection_coefficient(self, tag: Tag) -> complex:
         """
         Returns the complex reflection coefficient used when the tag is contributing to the channel.
         Rules implemented:
-            - If tag is not powered -> return a very small passive reflection (near-zero complex) to represent the tag's metal scatter but not a powered, modulated reflection.
-            - If tag.mode.is_listening() -> return a small unmodulated reflection (the envelope detector input typically presents an absorbing load; we model a low baseline reflection).
-            - If tag is transmitting (mode != listening) -> return the reflection coefficient based on the antenna and current chip impedances.
+            - If tag is not powered -> return a very small passive reflection
+            - If tag.mode.is_listening() -> return a small unmodulated reflection
+            - If tag is transmitting (mode != listening) -> return the reflection coefficient based on impedances
 
         Parameters:
             tag (Tag): The tag to get the reflection coefficient for.
@@ -217,8 +204,8 @@ class PhysicsEngine:
 
     def voltage_at_tag(self, tags: dict[str, Tag], receiving_tag: Tag) -> float:
         """
-        Get's the total voltage delivered to a given tag by the rest of the
-        tags.
+        Get's the total voltage delivered to a given tag by the rest of the tags.
+        This includes feedback loops in the backscatter.
 
         Parameters:
             tags (dict[str, Tag]): A dictionary of all the tags in the simulation.
@@ -226,45 +213,72 @@ class PhysicsEngine:
         Returns:
             float: The voltage at the receiving tag's envelope detector input.
         """
-        exs = self.exciters
         rx_impedance = receiving_tag.get_impedance()
 
         # --- Collect all tag names ---
         tag_names = list(tags.keys())
         if receiving_tag.get_name() not in tag_names:
             tag_names.append(receiving_tag.get_name())
-
         n = len(tag_names)
         if n == 0:
             return 0.0
 
-        # --- Build H matrix (channel gains between tags) ---
-        H = np.zeros((n, n), dtype=np.complex128)
-        for i, name_i in enumerate(tag_names):
-            tag_i = tags[name_i] if name_i in tags else receiving_tag
+        # --- Compute current simulation state hash ---
+        current_hash = self._compute_state_hash(tags)
+
+        # --- Rebuild matrices only if topology or reflection coefficients changed ---
+        if (
+            self._cached_state["hash"] != current_hash
+            or self._cached_state["tag_names"] != tag_names
+        ):
+            # --- Build channel matrix H ---
+            H = np.zeros((n, n), dtype=np.complex128)
+            for i, name_i in enumerate(tag_names):
+                tag_i = tags[name_i] if name_i in tags else receiving_tag
+                for j, name_j in enumerate(tag_names):
+                    if i == j:
+                        continue
+                    tag_j = tags[name_j] if name_j in tags else receiving_tag
+                    H[i, j] = self.get_sig_tx_rx(tag_j, tag_i)
+
+            # --- Build reflection coefficients Γ ---
+            gammas = np.zeros(n, dtype=np.complex128)
             for j, name_j in enumerate(tag_names):
-                if i == j:
-                    continue
                 tag_j = tags[name_j] if name_j in tags else receiving_tag
-                H[i, j] = self.get_sig_tx_rx(tag_j, tag_i)
+                gammas[j] = self.effective_reflection_coefficient(tag_j)
+            Gamma = np.diag(gammas)
 
-        # --- Build reflection coefficients Γ ---
-        gammas = np.zeros(n, dtype=np.complex128)
-        for j, name_j in enumerate(tag_names):
-            tag_j = tags[name_j] if name_j in tags else receiving_tag
-            gammas[j] = self.effective_reflection_coefficient(tag_j)
-        Gamma = np.diag(gammas)
+            # --- Compute & cache inverse (I - HΓ)^(-1) ---
+            I = np.eye(n, dtype=np.complex128)
+            A = I - H @ Gamma
+            try:
+                S_inv = np.linalg.inv(A)
+            except np.linalg.LinAlgError:
+                S_inv = np.linalg.pinv(A)
 
-        # --- Build exciter contribution vector h_exciter ---
+            # --- Update cache ---
+            self._cached_state.update({
+                "hash": current_hash,
+                "tag_names": tag_names,
+                "H": H,
+                "Gamma": Gamma,
+                "S_inv": S_inv,
+            })
+        else:
+            # --- Reuse cached matrices ---
+            H = self._cached_state["H"]
+            Gamma = self._cached_state["Gamma"]
+            S_inv = self._cached_state["S_inv"]
+
+        # --- Build exciter contribution vector (sum over all exciters) ---
         h_exciter = np.zeros(n, dtype=np.complex128)
         for i, name_i in enumerate(tag_names):
             tag_i = tags[name_i] if name_i in tags else receiving_tag
-            h_exciter[i] = self.get_sig_tx_rx(ex, tag_i)
+            total_field = sum(self.get_sig_tx_rx(ex, tag_i) for ex in self.exciters.values())
+            h_exciter[i] = total_field
 
-        # --- Solve for steady-state field: S = (I - HΓ)^(-1) h_exciter ---
-        I = np.eye(n, dtype=np.complex128)
-        A = I - H @ Gamma
-        S = np.linalg.solve(A, h_exciter)
+        # --- Solve S = (I - HΓ)^(-1) * h_exciter using cached inverse ---
+        S = S_inv @ h_exciter
 
         # --- Extract field at receiving tag ---
         rx_field = S[tag_names.index(receiving_tag.get_name())]
@@ -274,7 +288,7 @@ class PhysicsEngine:
         v_pk = sqrt(abs(rx_impedance * pwr_received) / 500.0)
         v_rms = v_pk / sqrt(2.0)
 
-        # --- Add optional AWGN noise ---
+        # --- Add optional Gaussian noise ---
         if self.noise_std_volts and self.noise_std_volts > 0.0:
             v_rms = max(0.0, random.gauss(v_rms, self.noise_std_volts))
 
@@ -294,11 +308,11 @@ class PhysicsEngine:
             tags (dict[str, Tag]): A dictionary of all the tags in the simulation.
             tx (Tag): The transmitting tag.
             rx (Tag): The receiving tag.
-            tx_indices (Iterable[int] | None): Optional pair of indices to use for the tx tag. If None, will use [0, 1] if possible.
+            tx_indices (Iterable[int] | None): Optional pair of indices to use for the tx tag.
         Returns:
-            float: The modulation depth (absolute voltage difference) at the rx tag when tx switches between the two specified modes.
+            float: The modulation depth (absolute voltage difference) at the rx tag.
         """
-        # Choose indicies if not provided (avoid listening idx=0)
+        # Choose indices if not provided (avoid listening idx=0)
         if tx_indices is None:
             num_tx = len(tx.chip_impedances)
             if num_tx >= 3:

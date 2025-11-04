@@ -6,7 +6,7 @@ import random
 
 from math import sqrt
 from tags.state_machine import StateSerializer
-from main import load_json, load_txt  # or just load_json if using JSON files
+from main import load_json, load_txt
 from tags.tag import TagMode, Tag
 from physics import PhysicsEngine 
 from state import AppState
@@ -21,8 +21,8 @@ avoid_infinite = 1e6 + 0j   # used for 0° open-circuit
 N = 36                      # 10° increments → 36 steps
 
 def gamma_from_deg(deg):
-        """Return reflection coefficient for a given phase angle in degrees."""
-        return cmath.exp(1j * np.deg2rad(deg))
+    """Return reflection coefficient for a given phase angle in degrees."""
+    return cmath.exp(1j * np.deg2rad(deg))
 
 def zchip_from_gamma(gamma, Z_ant=Z_ant):
     """Compute chip impedance that yields reflection coefficient gamma."""
@@ -31,25 +31,27 @@ def zchip_from_gamma(gamma, Z_ant=Z_ant):
         return avoid_infinite
     return Z_ant * (1 + gamma) / (1 - gamma)
 
-def voltage_at_tag_NoFL(self, tags: dict[str, Tag], receiving_tag: Tag, include_helpers: bool = True) -> float:
-        """
-        Get's the total voltage delivered to a given tag by the rest of the
-        tags. This currently has no feedback loops in the backscatter for simplicity.
+def voltage_at_tag_NoFL(self, tags, receiving_tag):
+    """
+    Get the total voltage delivered to a given tag WITHOUT feedback loops.
+    This is a simplified version that doesn't account for backscatter feedback.
 
-        Parameters:
-            tags (dict[str, Tag]): A dictionary of all the tags in the simulation.
-            receiving_tag (Tag): The tag to get the voltage for.
-            include_helpers (bool): Whether to include helper tags in the calculation.
-        Returns:
-            float: The voltage at the receiving tag's envelope detector input.
-        """
-        ex = self.exciter
-        rx_impedance = receiving_tag.get_impedance()
+    Parameters:
+        physics_engine (PhysicsEngine): The physics engine instance.
+        tags (dict[str, Tag]): A dictionary of all the tags in the simulation.
+        receiving_tag (Tag): The tag to get the voltage for.
+    Returns:
+        float: The voltage at the receiving tag's envelope detector input.
+    """
+    rx_impedance = receiving_tag.get_impedance()
+    sigs_to_rx = []
 
-        # This will be summed later
-        sigs_to_rx = []
+    # Loop over ALL exciters (now a dict)
+    for ex in self.exciters.values():
+        # Direct exciter → receiver
         sigs_to_rx.append(self.get_sig_tx_rx(ex, receiving_tag))
 
+        # Backscatter from other tags (first-order only, no feedback)
         for tag in tags.values():
             if tag is receiving_tag:
                 continue
@@ -61,16 +63,18 @@ def voltage_at_tag_NoFL(self, tags: dict[str, Tag], receiving_tag: Tag, include_
             sig_ex_tx = self.get_sig_tx_rx(ex, tag)
             sig_tx_rx = self.get_sig_tx_rx(tag, receiving_tag)
             sigs_to_rx.append(sig_ex_tx * reflection_coeff * sig_tx_rx)
+        break 
 
-        pwr_received = abs(sum(sigs_to_rx))
-        v_pk = sqrt(abs(rx_impedance * pwr_received) / 500.0)
-        v_rms = v_pk / sqrt(2.0)
+    # Combine signals
+    pwr_received = abs(sum(sigs_to_rx))
+    v_pk = sqrt(abs(rx_impedance * pwr_received) / 500.0)
+    v_rms = v_pk / sqrt(2.0)
 
-        # Add optional AWGN noise (applied to the RMS read-out)
-        if self.noise_std_volts and self.noise_std_volts > 0.0:
-            v_rms = max(0.0, random.gauss(v_rms, self.noise_std_volts))
+    # Add optional AWGN noise
+    if self.noise_std_volts and self.noise_std_volts > 0.0:
+        v_rms = max(0.0, random.gauss(v_rms, self.noise_std_volts))
 
-        return v_rms
+    return v_rms
 
 def phase_sweep_NoFL():
     app_state = AppState()
@@ -100,7 +104,7 @@ def phase_sweep_NoFL():
     num_modes_tx2 = len(tx2.chip_impedances)
 
     for i in range(num_modes_tx1):
-        tx1.set_mode(TagMode(i))  # Use the index as mode
+        tx1.set_mode(TagMode(i))
         for j in range(num_modes_tx2):
             tx2.set_mode(TagMode(j))
 
@@ -146,7 +150,7 @@ def run_feedback_phase_sweep():
     num_modes_tx2 = len(tx2.chip_impedances)
 
     for i in range(num_modes_tx1):
-        tx1.set_mode(TagMode(i))  # Use the index as mode
+        tx1.set_mode(TagMode(i))
         for j in range(num_modes_tx2):
             tx2.set_mode(TagMode(j))
 
@@ -186,24 +190,41 @@ def run_feedback_phase_sweep():
 
 def plot_results(results_FL, results_NoFL):
     """
-    Bar plot of RX voltage for each TX mode combination.
+    Plot RX voltage for each TX mode combination, comparing feedback vs no feedback.
     """
     labels = [f"{r['tx1_phase']}°,{r['tx2_phase']}°" for r in results_FL]
     values_FL = [r["v_rx_volts"] for r in results_FL]
     values_NoFL = [r["v_rx_volts"] for r in results_NoFL]
 
-    plt.figure(figsize=(10, 5))
-    plt.plot(labels, values_FL, marker='o', linestyle='-', label="With Feedback Loop")
-    plt.plot(labels, values_NoFL, marker='s', linestyle='--', label="No Feedback Loop")
-    plt.xlabel("TX Mode Combination (TX1,TX2)")
+    plt.figure(figsize=(14, 6))
+    x_indices = range(len(labels))
+    
+    plt.plot(x_indices, values_FL, marker='o', markersize=3, linestyle='-', 
+             label="With Feedback Loop", linewidth=1.5, alpha=0.8)
+    plt.plot(x_indices, values_NoFL, marker='s', markersize=3, linestyle='--', 
+             label="No Feedback Loop", linewidth=1.5, alpha=0.8)
+    
+    plt.xlabel("TX Mode Combination Index (TX1°, TX2°)")
     plt.ylabel("RX Voltage (Volts)")
-    plt.title("RX Voltage for TX Mode Combinations")
-    plt.grid(True)
-    plt.xticks(rotation=45)  # rotate labels for readability
+    plt.title("RX Voltage for TX Mode Combinations: Feedback vs No Feedback")
+    plt.grid(True, alpha=0.3)
+    plt.legend()
+    
+    # Show every 36th label (once per full TX1 cycle)
+    step = 36
+    plt.xticks([i for i in x_indices if i % step == 0], 
+               [labels[i] for i in x_indices if i % step == 0], 
+               rotation=45, ha='right')
+    
     plt.tight_layout()
     plt.show()
 
 if __name__ == "__main__":
+    print("Running feedback phase sweep...")
     results_FL = run_feedback_phase_sweep()
+    
+    print("\nRunning no-feedback phase sweep...")
     results_NoFL = phase_sweep_NoFL()
+    
+    print("\nPlotting results...")
     plot_results(results_FL, results_NoFL)
