@@ -135,7 +135,6 @@ class PhysicsEngine:
                 distance, wavelength, ex.get_gain(), tag.get_gain()
             )
             power_rxs += max(power_rx, 0.0)
-            break 
         return power_rxs
 
     def is_tag_powered(self, tag: Tag) -> bool:
