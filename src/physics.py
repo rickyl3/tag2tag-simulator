@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Iterable
 import numpy as np
 
 import scipy.spatial.distance as dist
-from scipy.constants import c, e, pi
+from scipy.constants import c, pi
 import random
 import cmath
 
@@ -110,7 +110,9 @@ class PhysicsEngine:
         distance = dist.euclidean(tx.get_position(), rx.get_position())
         wavelen = c / tx.get_frequency()
         att = sqrt(self.attenuation(distance, wavelen, tx.get_gain(), rx.get_gain()))
-        return att * (e ** (1j * 2 * pi * distance / wavelen))
+        return att * (
+            cmath.exp(1j * 2 * pi * distance / wavelen)
+        )  # Use Cmath for e not e from scipy
 
     def power_from_exciters_at_tag_mw(self, tag: Tag) -> float:
         """
