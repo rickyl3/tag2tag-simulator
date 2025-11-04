@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Iterable
 import numpy as np
 
 import scipy.spatial.distance as dist
-from scipy.constants import c, pi
+from scipy.constants import c, e, pi
 import random
 import cmath
 
@@ -110,7 +110,7 @@ class PhysicsEngine:
         distance = dist.euclidean(tx.get_position(), rx.get_position())
         wavelen = c / tx.get_frequency()
         att = sqrt(self.attenuation(distance, wavelen, tx.get_gain(), rx.get_gain()))
-        return att * cmath.exp(1j * 2 * pi * distance / wavelen)
+        return att * (e ** (1j * 2 * pi * distance / wavelen))
 
     def power_from_exciters_at_tag_mw(self, tag: Tag) -> float:
         """
@@ -214,7 +214,6 @@ class PhysicsEngine:
         """
         rx_impedance = receiving_tag.get_impedance()
 
-        # --- Collect all tag names ---
         tag_names = list(tags.keys())
         if receiving_tag.get_name() not in tag_names:
             tag_names.append(receiving_tag.get_name())
@@ -222,72 +221,41 @@ class PhysicsEngine:
         if n == 0:
             return 0.0
 
-        # --- Compute current simulation state hash ---
-        current_hash = self._compute_state_hash(tags)
-
-        # --- Rebuild matrices only if topology or reflection coefficients changed ---
-        if (
-            self._cached_state["hash"] != current_hash
-            or self._cached_state["tag_names"] != tag_names
-        ):
-            # --- Build channel matrix H ---
-            H = np.zeros((n, n), dtype=np.complex128)
-            for i, name_i in enumerate(tag_names):
-                tag_i = tags[name_i] if name_i in tags else receiving_tag
-                for j, name_j in enumerate(tag_names):
-                    if i == j:
-                        continue
-                    tag_j = tags[name_j] if name_j in tags else receiving_tag
-                    H[i, j] = self.get_sig_tx_rx(tag_j, tag_i)
-
-            # --- Build reflection coefficients Γ ---
-            gammas = np.zeros(n, dtype=np.complex128)
+        # --- Channel matrix (H) ---
+        H = np.zeros((n, n), dtype=np.complex128)
+        for i, name_i in enumerate(tag_names):
+            tag_i = tags[name_i] if name_i in tags else receiving_tag
             for j, name_j in enumerate(tag_names):
+                if i == j:
+                    continue
                 tag_j = tags[name_j] if name_j in tags else receiving_tag
-                gammas[j] = self.effective_reflection_coefficient(tag_j)
-            Gamma = np.diag(gammas)
+                H[i, j] = self.get_sig_tx_rx(tag_j, tag_i)
 
-            # --- Compute & cache inverse (I - HΓ)^(-1) ---
-            I = np.eye(n, dtype=np.complex128)
-            A = I - H @ Gamma
-            try:
-                S_inv = np.linalg.inv(A)
-            except np.linalg.LinAlgError:
-                S_inv = np.linalg.pinv(A)
+        # --- Reflection coefficients (Γ) ---
+        gammas = np.zeros(n, dtype=np.complex128)
+        for j, name_j in enumerate(tag_names):
+            tag_j = tags[name_j] if name_j in tags else receiving_tag
+            gammas[j] = self.effective_reflection_coefficient(tag_j)
+        Gamma = np.diag(gammas)
 
-            # --- Update cache ---
-            self._cached_state.update({
-                "hash": current_hash,
-                "tag_names": tag_names,
-                "H": H,
-                "Gamma": Gamma,
-                "S_inv": S_inv,
-            })
-        else:
-            # --- Reuse cached matrices ---
-            H = self._cached_state["H"]
-            Gamma = self._cached_state["Gamma"]
-            S_inv = self._cached_state["S_inv"]
-
-        # --- Build exciter contribution vector (sum over all exciters) ---
+        # --- Excitation vector (sum over all exciters) ---
         h_exciter = np.zeros(n, dtype=np.complex128)
         for i, name_i in enumerate(tag_names):
             tag_i = tags[name_i] if name_i in tags else receiving_tag
             total_field = sum(self.get_sig_tx_rx(ex, tag_i) for ex in self.exciters.values())
             h_exciter[i] = total_field
 
-        # --- Solve S = (I - HΓ)^(-1) * h_exciter using cached inverse ---
-        S = S_inv @ h_exciter
+        # --- Solve S = (I - HΓ)^(-1) h_exciter ---
+        I = np.eye(n, dtype=np.complex128)
+        A = I - H @ Gamma
+        S = np.linalg.solve(A, h_exciter)
 
-        # --- Extract field at receiving tag ---
+        # --- Voltage magnitude at receiver ---
         rx_field = S[tag_names.index(receiving_tag.get_name())]
         pwr_received = abs(rx_field)
-
-        # --- Convert to voltage ---
         v_pk = sqrt(abs(rx_impedance * pwr_received) / 500.0)
         v_rms = v_pk / sqrt(2.0)
 
-        # --- Add optional Gaussian noise ---
         if self.noise_std_volts and self.noise_std_volts > 0.0:
             v_rms = max(0.0, random.gauss(v_rms, self.noise_std_volts))
 
