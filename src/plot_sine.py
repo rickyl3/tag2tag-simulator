@@ -63,7 +63,6 @@ def voltage_at_tag_NoFL(self, tags, receiving_tag):
             sig_ex_tx = self.get_sig_tx_rx(ex, tag)
             sig_tx_rx = self.get_sig_tx_rx(tag, receiving_tag)
             sigs_to_rx.append(sig_ex_tx * reflection_coeff * sig_tx_rx)
-        break 
 
     # Combine signals
     pwr_received = abs(sum(sigs_to_rx))
