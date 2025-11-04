@@ -14,15 +14,17 @@
             "0+0j"
         ]
     },
-    "Exciter": {
-        "id": "default",
-        "x": 0.0,
-        "y": 0.0,
-        "z": 1.0,
-        "power": 250.0,
-        "gain": 6.0,
-        "impedance": 50.0,
-        "frequency": 900000000.0
+    "Exciters": {
+        "Exciter": {
+            "id": "default",
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0,
+            "power": 250.0,
+            "gain": 6.0,
+            "impedance": 50.0,
+            "frequency": 900000000.0
+        }
     },
     "Objects": {
         "TX1": {
