@@ -1,0 +1,65 @@
+{
+    "Format": "state_machine",
+    "states": [
+        {
+            "id": "EMPTY",
+            "transitions": {}
+        },
+        {
+            "id": "sender_output_0",
+            "transitions": {
+                "init": [
+                    [
+                        "sequence",
+                        ["_comment", "set the tag to chip impedance index 1"],
+                        ["load_imm", 0, 1],
+                        ["set_antenna", 0],
+                        ["_comment", "wait 10 ticks before starting to send"],
+                        ["load_imm", 0, 10],
+                        ["set_timer", 0]
+                    ],
+                    "sender_output_0"
+                ],
+                "on_timer": [
+                    [
+                        "sequence",
+                        ["_comment", "set the tag to chip impedance index 2"],
+                        ["load_imm", 0, 2],
+                        ["set_antenna", 0]
+                    ],
+                    "EMPTY"
+                ]
+            }
+        },
+        {
+            "id": "receiver_input_0",
+            "transitions": {
+                "init": [
+                    [
+                        "sequence",
+                        ["_comment", "wait 5 ticks before performing first reading"],
+                        ["load_imm", 0, 5],
+                        ["set_timer", 0]
+                    ],
+                    "receiver_input_0"
+                ],
+                "on_timer": [
+                    [
+                        "sequence",
+                        ["_comment", "wait 10 ticks before performing second reading"],
+                        ["load_imm", 0, 10],
+                        ["set_timer", 0],
+                        ["save_voltage", 0]
+                    ],
+                    "receiver_input_1"
+                ]
+            }
+        },
+        {
+            "id": "receiver_input_1",
+            "transitions": {
+                "on_timer": [["save_voltage", 0], "EMPTY"]
+            }
+        }
+    ]
+}

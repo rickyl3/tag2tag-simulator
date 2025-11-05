@@ -1,0 +1,3 @@
+load demo/7_tag_test/config_files/states.json
+load demo/7_tag_test/config_files/events.json
+load demo/7_tag_test/config_files/config.json
