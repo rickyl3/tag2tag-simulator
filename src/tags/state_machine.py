@@ -715,7 +715,7 @@ class InputMachine(ExecuteMachine):
             extra={"out_reg": out_reg, "voltage": voltage},
         )
 
-    def _cmd_save_phase_ang_and_diff(self, out_reg1, out_reg2):
+    def _cmd_save_phase_ang_and_diff(self, out_reg1, out_reg2, out_reg3):
         """
         Command that saves the phase angle and phase difference between sender and a tag.
 
@@ -723,7 +723,7 @@ class InputMachine(ExecuteMachine):
             out_reg1 (int): Output register for phase angle.
             out_reg2 (int): Output register for phase difference.
         """
-        phase_angle, phase_difference = self.tag_machine.tag.read_phase_ang_and_diff()
+        phase_angle, phase_difference, doppler_freq = self.tag_machine.tag.read_phase_ang_and_diff()
         phase_angle = self.registers[out_reg1] = phase_angle
         self.logger().debug(
 	        "cmd_save_phase_ang_and_diff(%s): reg[%s] = %s",
@@ -739,6 +739,14 @@ class InputMachine(ExecuteMachine):
 	        out_reg2,
 	        phase_difference,
 	        extra={"out_reg": out_reg2, "phase difference": phase_difference},
+        )
+        phase_difference = self.registers[out_reg3] = doppler_freq
+        self.logger().debug(
+	        "cmd_save_phase_ang_and_diff(%s): reg[%s] = %s",
+	        out_reg3,
+	        out_reg3,
+	        doppler_freq,
+	        extra={"out_reg": out_reg3, "doppler frequency": doppler_freq},
         )
 
     def _cmd_send_bit(self, reg: int):

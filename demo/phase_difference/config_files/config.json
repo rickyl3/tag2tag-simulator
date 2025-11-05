@@ -18,8 +18,8 @@
     "Exciters": {
         "Exciter1": {
             "id": "default",
-            "x": 3.0,
-            "y": 0.0,
+            "x": 0.0,
+            "y": -1.0,
             "z": 0.0,
             "power": 1.0,
             "gain": 0.0,
@@ -35,7 +35,7 @@
                 "output_machine": "sender_output_0"
             },
             "x": 1.5,
-            "y": 0.0,
+            "y": 0.1,
             "z": 0.0,
             "power": 0,
             "gain": 0,

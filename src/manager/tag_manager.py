@@ -67,7 +67,7 @@ class TagManager:
         """
         return self.physics_engine.voltage_at_tag(self.tags, asking_tag)
 
-    def get_phase_ang_and_diff(self, asking_receiver: Tag) -> (float, float):
+    def get_phase_ang_and_diff(self, asking_receiver: Tag) -> float:
 	    """
 	    Calculates the phase angle and phase difference between the sender and a tag.
 	    Assumes 1 sender and that all receivers are ordered alphabetically.

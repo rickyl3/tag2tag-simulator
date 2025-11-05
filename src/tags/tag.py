@@ -308,12 +308,12 @@ class Tag(PhysicsObject):
 
     def read_phase_ang_and_diff(self) -> float:
         tag_manager = self.app_state.tag_manager
-        phase_ang, phase_diff = tag_manager.get_phase_ang_and_diff(self)
+        phase_ang, phase_diff, doppler_freq = tag_manager.get_phase_ang_and_diff(self)
         self.logger.info(
-	        f"Phase Angle: {phase_ang}, Phase Angle: {phase_diff}",
-	        extra={"phase_ang": phase_ang, "phase_diff": phase_diff},
+	        f"Phase Angle: {phase_ang}, Phase Angle: {phase_diff}, Doppler Frequency at Receiver: {doppler_freq}",
+	        extra={"phase_ang": phase_ang, "phase_diff": phase_diff, "doppler_freq": doppler_freq},
         )
-        return phase_ang, phase_diff
+        return phase_ang, phase_diff, doppler_freq
 
     def to_dict(self):
         """For placing tags into dicts correctly on JSON"""

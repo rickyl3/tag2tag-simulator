@@ -209,12 +209,13 @@
                         "sequence",
                         [
                             "_comment",
-                            "store baseline phase angle and phase difference in register 0, 4"
+                            "store baseline phase angle, phase difference, and perceived frequency with the doppler effect in register 0, 4, 6"
                         ],
                         [
                             "save_phase_ang_and_diff",
                             0,
-	                        4
+	                        4,
+	                        6
                         ],
                         [
                             "_comment",
@@ -251,12 +252,13 @@
                         "sequence",
                         [
                             "_comment",
-                            "store read phase angle and phase difference in register 3, 5"
+                            "store read phase angle, phase difference, and perceived frequency with the doppler effect in register 3, 5, 7"
                         ],
                         [
                             "save_phase_ang_and_diff",
                             3,
-	                        5
+	                        5,
+	                        7
                         ],
                         [
                             "sub",
