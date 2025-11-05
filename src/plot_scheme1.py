@@ -2,11 +2,6 @@ import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 
-# import os
-# import sys
-# # Add project_root/src to sys.path dynamically
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 from tags.state_machine import StateSerializer
 from tags.tag import TagMode
 from main import load_json
@@ -16,7 +11,9 @@ from state import AppState
 
 # ---------------- CONFIG ----------------
 CONFIG_PATH = "demo/7_tag_test/config_files/config.json"
-NUM_COEFFS = 6  # Only use 6 reflection coefficients (indices 1-6), index 0 is non-reflecting
+NUM_COEFFS = 6  # Only use reflection coefficients starting from index 1 (indices 1 - NUM_COEFFS) based on available; index 0 is non-reflecting
+
+# Optional plotting settings
 USE_JITTER = True  # Set to False for perfectly vertical alignment of dots
 USE_HISTOGRAM = True  # Set to False to show individual gray dots instead of histogram
 # ----------------------------------------
@@ -56,11 +53,8 @@ def run_modulation_depth_sweep():
     # Load config and initialize physics engine
     exciters, tags, _, _ = load_json(CONFIG_PATH, serializer, app_state=app_state)
     physics_engine = PhysicsEngine(exciters)
-
     tx = tags.get("TX1")
     rx = tags.get("RX1")
-
-    # Identify helper tags (not TX1 or RX1)
     helper_tags = [tag for name, tag in tags.items() if name not in ("TX1", "RX1")]
     
     print(f"Number of helpers: {len(helper_tags)}")
@@ -86,7 +80,6 @@ def run_modulation_depth_sweep():
                 for helper in helper_tags:
                     helper.set_mode(TagMode(0))  # non-reflecting
                 
-                # Set RX to non-reflecting (listening)
                 rx.set_mode(TagMode(0))
                 
                 depth = compute_modulation_depth(physics_engine, tags, tx, rx)
@@ -103,16 +96,14 @@ def run_modulation_depth_sweep():
                 
                 combo_count = 0
                 for combo in itertools.product(coeff_indices, repeat=helper_count):
-                    # Set helpers in this subset to their assigned coefficients
+                    # Set up helpers and RX coefficients for this subset
                     for helper, coeff_idx in zip(subset, combo):
                         helper.set_mode(TagMode(coeff_idx))
                     
-                    # Set helpers NOT in this subset to non-reflecting
                     for helper in helper_tags:
                         if helper not in subset:
                             helper.set_mode(TagMode(0))
                     
-                    # Set RX to non-reflecting (listening)
                     rx.set_mode(TagMode(0))
                     
                     # Compute modulation depth
@@ -154,9 +145,9 @@ def run_modulation_depth_sweep():
     return all_results
 
 
-def plot_figure5(results):
+def plot_scheme1(results):
     """
-    Plot a Figure 5–style modulation depth chart.
+    Plot a scheme 1 modulation depth chart.
     
     - Gray: distribution shown as histogram (USE_HISTOGRAM=True) or all dots (USE_HISTOGRAM=False)
     - Green dots: best modulation depth for each subset (one per subset)
@@ -169,14 +160,12 @@ def plot_figure5(results):
 
     for res in results:
         x = res["helper_count"]
-        all_depths = res["all_depths"]  # All measurements from all combinations
-        subset_bests = res["subset_best_depths"]  # One value per subset
+        all_depths = res["all_depths"] 
+        subset_bests = res["subset_best_depths"]
         optimal = res["optimal"]
 
         if USE_HISTOGRAM:
-            # Light gray dotted line: show distribution as density (PDF-style histogram)
             if len(all_depths) > 1:
-                # Create histogram to get density
                 hist, bin_edges = np.histogram(all_depths, bins=50)
                 bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
                 
@@ -187,17 +176,14 @@ def plot_figure5(results):
                 x_offsets = hist_normalized * 0.4
                 x_positions = x + x_offsets
                 
-                # Plot as dotted line
                 plt.plot(x_positions, bin_centers, color='gray', linestyle=':', 
                         linewidth=1.5, alpha=0.6, zorder=1)
                 
-                # Also add line back to x (close the shape)
                 plt.plot([x, x_positions[0]], [bin_centers[0], bin_centers[0]], 
                         color='gray', linestyle=':', linewidth=1.5, alpha=0.6, zorder=1)
                 plt.plot([x, x_positions[-1]], [bin_centers[-1], bin_centers[-1]], 
                         color='gray', linestyle=':', linewidth=1.5, alpha=0.6, zorder=1)
         else:
-            # Light gray dots: show ALL measurements from all combinations
             if len(all_depths) > 0:
                 if USE_JITTER:
                     x_jitter = x + np.random.uniform(-0.15, 0.15, len(all_depths))
@@ -206,7 +192,6 @@ def plot_figure5(results):
                 
                 plt.scatter(x_jitter, all_depths, color='lightgray', alpha=0.3, s=10, zorder=1)
 
-        # Green dots: best for each subset
         if len(subset_bests) > 0:
             if USE_JITTER:
                 x_jitter = x + np.random.uniform(-0.08, 0.08, len(subset_bests))
@@ -216,7 +201,6 @@ def plot_figure5(results):
             plt.scatter(x_jitter, subset_bests, color='green', alpha=0.7, s=60, 
                        edgecolors='darkgreen', linewidths=1, zorder=2)
 
-        # Red triangle (global best for this helper count)
         plt.scatter(x, optimal, marker='^', color='red', s=120, 
                    edgecolors='darkred', linewidths=2, zorder=4)
 
@@ -232,7 +216,6 @@ def plot_figure5(results):
     plt.xticks(range(0, max(helper_counts) + 1))
     plt.grid(True, alpha=0.3, linestyle='--')
     
-    # Create legend (varies based on histogram toggle)
     from matplotlib.lines import Line2D
     if USE_HISTOGRAM:
         legend_elements = [
@@ -266,7 +249,6 @@ def plot_figure5(results):
     print(f"Helper count: {global_max_x}")
     print(f"Modulation depth: {global_max_y:.2f} mV")
     
-    # Show improvement trend
     print(f"\n=== Improvement Trend ===")
     baseline = results[0]["optimal"] if len(results) > 0 else 0
     for res in results:
@@ -280,4 +262,4 @@ def plot_figure5(results):
 
 if __name__ == "__main__":
     results = run_modulation_depth_sweep()
-    plot_figure5(results)
+    plot_scheme1(results)
