@@ -158,7 +158,7 @@ def plot_figure5(results):
     """
     Plot a Figure 5–style modulation depth chart.
     
-    - Light gray: distribution shown as histogram (USE_HISTOGRAM=True) or all dots (USE_HISTOGRAM=False)
+    - Gray: distribution shown as histogram (USE_HISTOGRAM=True) or all dots (USE_HISTOGRAM=False)
     - Green dots: best modulation depth for each subset (one per subset)
     - Red triangle: globally best configuration (one per helper count)
     """
@@ -188,14 +188,14 @@ def plot_figure5(results):
                 x_positions = x + x_offsets
                 
                 # Plot as dotted line
-                plt.plot(x_positions, bin_centers, color='lightgray', linestyle=':', 
+                plt.plot(x_positions, bin_centers, color='gray', linestyle=':', 
                         linewidth=1.5, alpha=0.6, zorder=1)
                 
                 # Also add line back to x (close the shape)
                 plt.plot([x, x_positions[0]], [bin_centers[0], bin_centers[0]], 
-                        color='lightgray', linestyle=':', linewidth=1.5, alpha=0.6, zorder=1)
+                        color='gray', linestyle=':', linewidth=1.5, alpha=0.6, zorder=1)
                 plt.plot([x, x_positions[-1]], [bin_centers[-1], bin_centers[-1]], 
-                        color='lightgray', linestyle=':', linewidth=1.5, alpha=0.6, zorder=1)
+                        color='gray', linestyle=':', linewidth=1.5, alpha=0.6, zorder=1)
         else:
             # Light gray dots: show ALL measurements from all combinations
             if len(all_depths) > 0:
