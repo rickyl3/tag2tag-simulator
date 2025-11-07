@@ -1,0 +1,196 @@
+{
+    "Format": "config",
+    "Default": {
+        "exciter_power": 1.0,
+        "gain": 0,
+        "impedance": 50.0,
+        "frequency": 900000000.0,
+        "input_machine_id": "receiver_input_0",
+        "proccessing_machine_id": "receiver_processing_0",
+        "output_machine_id": "receiver_output_0",
+        "chip_impedances": [
+            "1e6+0j",
+            "50+86.60254037844387j",
+            "25+43.30127018922193j",
+            "1e-6+0j",
+            "25-43.30127018922193j",
+            "50-86.60254037844387j",
+            "1e6+0j"
+        ]
+    },
+    "Exciters": {
+        "Exciter": {
+            "id": "default",
+            "x": -2.0,
+            "y": 0.0,
+            "z": 0.0,
+            "power": 250.0,
+            "gain": 6.0,
+            "impedance": 50.0,
+            "frequency": 900000000.0
+        }
+    },
+    "Objects": {
+        "TX1": {
+            "tag_machine": {
+                "input_machine": "EMPTY",
+                "processing_machine": "tx1_processing_0",
+                "output_machine": "tx1_output_0"
+            },
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "power": 0,
+            "gain": 0,
+            "impedance": 50.0,
+            "chip_impedances": [
+                "1e6+0j",
+                "50+86.60254037844387j",
+                "25+43.30127018922193j",
+                "1e-6+0j",
+                "25-43.30127018922193j",
+                "50-86.60254037844387j",
+                "1e6+0j"
+            ],
+            "frequency": 900000000.0
+        },
+        "RX1": {
+            "tag_machine": {
+                "input_machine": "receiver_input_0",
+                "processing_machine": "receiver_processing_0",
+                "output_machine": "receiver_output_0"
+            },
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "power": 0,
+            "gain": 0,
+            "impedance": 50.0,
+            "chip_impedances": [
+                "1e6+0j",
+                "50+86.60254037844387j",
+                "25+43.30127018922193j",
+                "1e-6+0j",
+                "25-43.30127018922193j",
+                "50-86.60254037844387j",
+                "1e6+0j"
+            ],
+            "frequency": 900000000.0
+        },
+        "H1": {
+            "tag_machine": {
+                "input_machine": "EMPTY",
+                "processing_machine": "helper1_processing_0",
+                "output_machine": "helper1_output_0"
+            },
+            "x": -0.25,
+            "y": 0.5,
+            "z": 0.0,
+            "power": 0,
+            "gain": 0,
+            "impedance": 50.0,
+            "chip_impedances": [
+                "1e6+0j",
+                "50+86.60254037844387j",
+                "25+43.30127018922193j",
+                "1e-6+0j",
+                "25-43.30127018922193j",
+                "50-86.60254037844387j",
+                "1e6+0j"
+            ],
+            "frequency": 900000000.0
+        },
+        "H2": {
+            "tag_machine": {
+                "input_machine": "EMPTY",
+                "processing_machine": "helper2_processing_0",
+                "output_machine": "helper2_output_0"
+            },
+            "x": -0.25,
+            "y": -0.5,
+            "z": 0.0,
+            "power": 0,
+            "gain": 0,
+            "impedance": 50.0,
+            "chip_impedances": [
+                "1e6+0j",
+                "50+86.60254037844387j",
+                "25+43.30127018922193j",
+                "1e-6+0j",
+                "25-43.30127018922193j",
+                "50-86.60254037844387j",
+                "1e6+0j"
+            ],
+            "frequency": 900000000.0
+        },
+        "H3": {
+            "tag_machine": {
+                "input_machine": "EMPTY",
+                "processing_machine": "helper3_processing_0",
+                "output_machine": "helper3_output_0"
+            },
+            "x": 0.25,
+            "y": 0.5,
+            "z": 0.0,
+            "power": 0,
+            "gain": 0,
+            "impedance": 50.0,
+            "chip_impedances": [
+                "1e6+0j",
+                "50+86.60254037844387j",
+                "25+43.30127018922193j",
+                "1e-6+0j",
+                "25-43.30127018922193j",
+                "50-86.60254037844387j",
+                "1e6+0j"
+            ],
+            "frequency": 900000000.0
+        },
+        "H4": {
+            "tag_machine": {
+                "input_machine": "EMPTY",
+                "processing_machine": "helper4_processing_0",
+                "output_machine": "helper4_output_0"
+            },
+            "x": 0.25,
+            "y": -0.5,
+            "z": 0.0,
+            "power": 0,
+            "gain": 0,
+            "impedance": 50.0,
+            "chip_impedances": [
+                "1e6+0j",
+                "50+86.60254037844387j",
+                "25+43.30127018922193j",
+                "1e-6+0j",
+                "25-43.30127018922193j",
+                "50-86.60254037844387j",
+                "1e6+0j"
+            ],
+            "frequency": 900000000.0
+        },
+        "H5": {
+            "tag_machine": {
+                "input_machine": "EMPTY",
+                "processing_machine": "helper5_processing_0",
+                "output_machine": "helper5_output_0"
+            },
+            "x": -0.5,
+            "y": 0.0,
+            "z": 0.0,
+            "power": 0,
+            "gain": 0,
+            "impedance": 50.0,
+            "chip_impedances": [
+                "1e6+0j",
+                "50+86.60254037844387j",
+                "25+43.30127018922193j",
+                "1e-6+0j",
+                "25-43.30127018922193j",
+                "50-86.60254037844387j",
+                "1e6+0j"
+            ],
+            "frequency": 900000000.0
+        }
+    }
+}

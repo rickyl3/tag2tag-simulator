@@ -10,7 +10,7 @@ from state import AppState
 
 
 # ---------------- CONFIG ----------------
-CONFIG_PATH = "demo/7_tag_test/config_files/config.json"
+CONFIG_PATH = "demo/7_tag_test/config_files/config2.json"
 NUM_COEFFS = 6  # Only use reflection coefficients starting from index 1 (indices 1 - NUM_COEFFS) based on available; index 0 is non-reflecting
 
 # Optional plotting settings
