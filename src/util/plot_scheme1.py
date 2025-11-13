@@ -2,6 +2,9 @@ import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  # Adjust path to import from parent directories
+
 from tags.state_machine import StateSerializer
 from tags.tag import TagMode
 from main import load_json

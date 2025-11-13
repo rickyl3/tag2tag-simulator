@@ -11,7 +11,7 @@ from simpy import Interrupt
 
 from state import AppState
 from util.app_logger import init_machine_logger
-from util.types import StateMethod
+from util.custom_types import StateMethod
 
 if TYPE_CHECKING:
     from tags.tag import Tag

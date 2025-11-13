@@ -6,7 +6,7 @@ import logging
 from state import AppState
 from tags.state_machine import TagMachine
 from util.app_logger import init_tag_logger
-from util.types import Position
+from util.custom_types import Position
 
 def _format_impedance(z) -> str:
     """

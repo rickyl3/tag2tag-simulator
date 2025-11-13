@@ -4,10 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-# import os
-# import sys
+import os
+import sys
 # # Add project_root/src to sys.path dynamically
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from math import sqrt
 from tags.state_machine import StateSerializer
