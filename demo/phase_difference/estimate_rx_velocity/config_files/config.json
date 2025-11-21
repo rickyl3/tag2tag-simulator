@@ -28,7 +28,7 @@
         }
     },
     "Objects": {
-        "MySuperCoolSender": {
+	    "MySuperCoolSender": {
             "tag_machine": {
                 "input_machine": "EMPTY",
                 "processing_machine": "sender_processing_0",
@@ -41,13 +41,11 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
-        "MySuperCoolSender2": {
+	    "MySuperCoolSender2": {
             "tag_machine": {
                 "input_machine": "EMPTY",
                 "processing_machine": "sender_processing_0",
@@ -60,13 +58,11 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
-        "MySuperCoolSender3": {
+	    "MySuperCoolSender3": {
             "tag_machine": {
                 "input_machine": "EMPTY",
                 "processing_machine": "sender_processing_0",
@@ -79,13 +75,11 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
-        "MySuperCoolSender4": {
+	    "MySuperCoolSender4": {
             "tag_machine": {
                 "input_machine": "EMPTY",
                 "processing_machine": "sender_processing_0",
@@ -98,13 +92,11 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
-        "MySuperCoolSender5": {
+	    "MySuperCoolSender5": {
             "tag_machine": {
                 "input_machine": "EMPTY",
                 "processing_machine": "sender_processing_0",
@@ -117,28 +109,24 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
-        "00000": {
+	    "00000": {
             "tag_machine": {
                 "input_machine": "receiver_input_0",
                 "processing_machine": "receiver_processing_0",
                 "output_machine": "receiver_output_0"
             },
-            "x": 1.0,
+            "x": 1.00,
             "y": 0.0,
             "z": 0.0,
             "power": 0,
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -155,9 +143,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -174,9 +160,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -193,9 +177,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -212,9 +194,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -231,9 +211,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -250,9 +228,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -269,9 +245,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -288,9 +262,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -307,9 +279,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -326,9 +296,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -345,9 +313,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -364,9 +330,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -383,9 +347,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -402,9 +364,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -421,9 +381,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -440,9 +398,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -459,9 +415,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -478,9 +432,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -497,9 +449,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -516,9 +466,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -535,9 +483,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -554,9 +500,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -573,9 +517,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -592,9 +534,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -611,9 +551,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -630,9 +568,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -649,9 +585,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -668,9 +602,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -687,9 +619,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -706,9 +636,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -725,9 +653,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -744,9 +670,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -763,9 +687,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -782,9 +704,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -801,9 +721,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -820,9 +738,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -839,9 +755,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -858,9 +772,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -877,9 +789,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -896,9 +806,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -915,9 +823,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -934,9 +840,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -953,9 +857,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -972,9 +874,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -991,9 +891,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1010,9 +908,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1029,9 +925,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1048,9 +942,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1067,9 +959,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1086,9 +976,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1105,9 +993,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1124,9 +1010,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1143,9 +1027,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1162,9 +1044,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1181,9 +1061,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1200,9 +1078,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1219,9 +1095,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1238,9 +1112,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1257,9 +1129,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1276,9 +1146,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1295,9 +1163,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1314,9 +1180,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1333,9 +1197,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1352,9 +1214,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1371,9 +1231,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1390,9 +1248,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1409,9 +1265,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1428,9 +1282,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1447,9 +1299,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1466,9 +1316,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1485,9 +1333,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1504,9 +1350,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1523,9 +1367,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1542,9 +1384,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1561,9 +1401,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1580,9 +1418,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1599,9 +1435,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1618,9 +1452,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1637,9 +1469,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1656,9 +1486,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1675,9 +1503,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1694,9 +1520,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1713,9 +1537,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1732,9 +1554,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1751,9 +1571,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1770,9 +1588,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1789,9 +1605,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1808,9 +1622,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1827,9 +1639,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1846,9 +1656,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1865,9 +1673,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1884,9 +1690,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1903,9 +1707,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1922,9 +1724,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1941,9 +1741,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1960,9 +1758,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1979,9 +1775,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -1998,9 +1792,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -2017,9 +1809,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         },
@@ -2036,9 +1826,7 @@
             "gain": 0,
             "impedance": 50.0,
             "chip_impedances": [
-                "0+0j",
-                "0+0j",
-                "1e+09+0j"
+                   "20+0j", "200+0j", "50+50j"
             ],
             "frequency": 900000000.0
         }

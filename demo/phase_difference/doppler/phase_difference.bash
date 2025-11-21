@@ -1,4 +1,4 @@
-LOGFILE="$(dirname "$0")/../../logs/$(ls ../../logs | grep '\.json$' | tail -n 1)"
+LOGFILE="$(dirname "$0")/../../../logs/$(ls ../../../logs | grep '\.json$' | tail -n 1)"
 
 jq -r -s '
 map(select(.tag != null and .phase_ang != null and .phase_diff != null and .doppler_freq != null)) |

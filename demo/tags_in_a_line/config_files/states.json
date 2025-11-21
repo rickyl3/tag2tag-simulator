@@ -58,7 +58,10 @@
         {
             "id": "receiver_input_1",
             "transitions": {
-                "on_timer": [["save_voltage", 0], "EMPTY"]
+                "on_timer": [
+	                ["save_voltage", 0],
+	                "EMPTY"
+                ]
             }
         }
     ]

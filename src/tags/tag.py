@@ -306,14 +306,23 @@ class Tag(PhysicsObject):
         )
         return voltage
 
-    def read_phase_ang_and_diff(self) -> float:
+    def calc_doppler_effect(self) -> tuple[Any, Any, Any]:
         tag_manager = self.app_state.tag_manager
-        phase_ang, phase_diff, doppler_freq = tag_manager.get_phase_ang_and_diff(self)
+        phase_ang, phase_diff, doppler_freq = tag_manager.get_doppler_effect(self)
         self.logger.info(
-	        f"Phase Angle: {phase_ang}, Phase Angle: {phase_diff}, Doppler Frequency at Receiver: {doppler_freq}",
+	        f"Phase Angle: {phase_ang}, Phase Difference: {phase_diff}, Doppler Frequency at Receiver: {doppler_freq}",
 	        extra={"phase_ang": phase_ang, "phase_diff": phase_diff, "doppler_freq": doppler_freq},
         )
         return phase_ang, phase_diff, doppler_freq
+
+    def calc_estimated_rx_velocity(self) -> tuple[Any, Any, Any]:
+        tag_manager = self.app_state.tag_manager
+        v_n_spd, v_n_dir, help1 = tag_manager.get_estimated_rx_velocity(self)
+        self.logger.info(
+	        f"Estimated Receiver Velocity Direction: {v_n_spd}, Estimated Receiver Velocity Angle: {v_n_dir}, HelperMetric: {help1}",
+	        extra={"v_n_spd": v_n_spd, "v_n_dir": v_n_dir, "help1": help1},
+        )
+        return v_n_spd, v_n_dir, help1
 
     def to_dict(self):
         """For placing tags into dicts correctly on JSON"""

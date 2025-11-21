@@ -715,18 +715,20 @@ class InputMachine(ExecuteMachine):
             extra={"out_reg": out_reg, "voltage": voltage},
         )
 
-    def _cmd_save_phase_ang_and_diff(self, out_reg1, out_reg2, out_reg3):
+    def _cmd_save_doppler_effect(self, out_reg1, out_reg2, out_reg3):
         """
-        Command that saves the phase angle and phase difference between sender and a tag.
+        Command that saves the phase angle, phase difference,
+        and perceived frequency with the doppler effect between sender and a tag.
 
         Args:
             out_reg1 (int): Output register for phase angle.
             out_reg2 (int): Output register for phase difference.
+            out_reg3 (int): Output register for doppler effect.
         """
-        phase_angle, phase_difference, doppler_freq = self.tag_machine.tag.read_phase_ang_and_diff()
+        phase_angle, phase_difference, doppler_freq = self.tag_machine.tag.calc_doppler_effect()
         phase_angle = self.registers[out_reg1] = phase_angle
         self.logger().debug(
-	        "cmd_save_phase_ang_and_diff(%s): reg[%s] = %s",
+	        "cmd_save_doppler_effect(%s): reg[%s] = %s",
 	        out_reg1,
 	        out_reg1,
 	        phase_angle,
@@ -734,19 +736,54 @@ class InputMachine(ExecuteMachine):
         )
         phase_difference = self.registers[out_reg2] = phase_difference
         self.logger().debug(
-	        "cmd_save_phase_ang_and_diff(%s): reg[%s] = %s",
+	        "cmd_save_doppler_effect(%s): reg[%s] = %s",
 	        out_reg2,
 	        out_reg2,
 	        phase_difference,
 	        extra={"out_reg": out_reg2, "phase difference": phase_difference},
         )
-        phase_difference = self.registers[out_reg3] = doppler_freq
+        doppler_freq = self.registers[out_reg3] = doppler_freq
         self.logger().debug(
-	        "cmd_save_phase_ang_and_diff(%s): reg[%s] = %s",
+	        "cmd_save_doppler_effect(%s): reg[%s] = %s",
 	        out_reg3,
 	        out_reg3,
 	        doppler_freq,
 	        extra={"out_reg": out_reg3, "doppler frequency": doppler_freq},
+        )
+
+    def _cmd_save_estimated_rx_velocity(self, out_reg2, out_reg3, out_reg4):
+        """
+		Command that saves the estimated receiver velocity.
+
+		Args:
+			out_reg2 (int): Output register for
+			out_reg3 (int): Output register for
+			out_reg4 (int): Output register for
+		"""
+        v_n_spd, v_n_dir, help1 = self.tag_machine.tag.calc_estimated_rx_velocity()
+        v_n_spd = self.registers[out_reg2] = v_n_spd
+        self.logger().debug(
+	        "cmd_save_estimated_rx_velocity(%s): reg[%s] = %s",
+	        out_reg2,
+	        out_reg2,
+	        v_n_spd,
+	        extra={"out_reg": out_reg2, "estimated receiver velocity speed": v_n_spd},
+        )
+        v_n_dir = self.registers[out_reg3] = v_n_dir
+        self.logger().debug(
+	        "cmd_save_estimated_rx_velocity(%s): reg[%s] = %s",
+	        out_reg3,
+	        out_reg3,
+	        v_n_dir,
+	        extra={"out_reg": out_reg3, "estimated receiver velocity angle": v_n_dir},
+        )
+        help1 = self.registers[out_reg4] = help1
+        self.logger().debug(
+	        "cmd_save_estimated_rx_velocity(%s): reg[%s] = %s",
+	        out_reg4,
+	        out_reg4,
+	        help1,
+	        extra={"out_reg": out_reg4, "helpmetric1": help1},
         )
 
     def _cmd_send_bit(self, reg: int):

@@ -1,3 +1,0 @@
-load demo/phase_difference/config_files/states.json
-load demo/phase_difference/config_files/events.json
-load demo/phase_difference/config_files/config.json

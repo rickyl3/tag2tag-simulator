@@ -67,32 +67,46 @@ class TagManager:
         """
         return self.physics_engine.voltage_at_tag(self.tags, asking_tag)
 
-    def get_phase_ang_and_diff(self, asking_receiver: Tag) -> float:
+    def get_doppler_effect(self, asking_receiver: Tag) -> tuple[float, float, float]:
 	    """
-	    Calculates the phase angle and phase difference between the sender and a tag.
+        Calculates the phase angle, phase difference,
+        and perceived frequency with the doppler effect between sender and a tag.
+
 	    Assumes 1 sender and that all receivers are ordered alphabetically.
-	    # TODO: Is there a way to make this not an assumption? <- LOW PRIORITY
+	    # TODO: Is there a way to make this not an assumption?
 
 	    Args:
-	        asking_receiver (str): The tag.
+	        asking_receiver (str): The receiver.
 
 	    Returns:
 	        phase_ang (float): The phase angle.
 	        phase_diff (float): The phase difference.
+	        doppler_freq (float): The perceived frequency with the doppler effect.
 	    """
-	    # asking_sender = self.tags[name]
 	    tagz = list(self.tags.values())
 	    asking_sender = None
 	    for tag in tagz:
 		    if tag.tag_machine.input_machine.state.name == "EMPTY":
 			    asking_sender = tag
-			    break # The first sender alphabetically is picked by default.
+			    break  # TODO: The first sender alphabetically is picked by default. We need multiple to estimate receiver velocity.
 
-	    prev_receiver = asking_receiver;
-	    for x in range(1, len(tagz)):
-		    if tagz[x] == asking_receiver:
-			    if tagz[x - 1].tag_machine.input_machine.state.name == "EMPTY":
-				    break # No senders, please!
-			    prev_receiver = tagz[x - 1]
-			    break
-	    return self.physics_engine.phase_ang_and_diff(asking_sender, asking_receiver, prev_receiver)
+	    return self.physics_engine.doppler_effect(self.tags, asking_sender, asking_receiver)
+
+    def get_estimated_rx_velocity(self, asking_receiver: Tag) -> tuple[float, float, float]:
+	    """
+	    Calculates the estimated receiver velocity using a methods described in
+	    https://dl.acm.org/doi/pdf/10.1145/2639108.2639111 .
+	    Limited to 2-dimensions where positions along the Z-axis are ideally ignored,
+	    but it sounds possible to implement down the line, maybe?
+
+	    Assumes all receivers are ordered alphabetically.
+	    # TODO: Is there a way to make this not an assumption?
+
+	    Args:
+	        asking_receiver (str): The receiver.
+
+        Returns:
+            v_n_spd (float): The estimated receiver velocity speed.
+            v_n_dir (float): The estimated receiver velocity angle along the x-axis.
+	    """
+	    return self.physics_engine.estimate_rx_velocity(self.tags, asking_receiver)

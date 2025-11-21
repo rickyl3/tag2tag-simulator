@@ -1,0 +1,453 @@
+{
+    "Format": "state_machine",
+    "states": [
+        {
+            "id": "EMPTY",
+            "transitions": {}
+        },
+
+	    {
+            "id": "sender_processing_0",
+            "transitions": {
+                "init": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "store message in memory"
+                        ],
+                        [
+                            "store_mem_imm",
+                            0,
+                            [
+                                1,
+                                1,
+                                0,
+                                1,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1,
+                                1,
+                                1,
+                                1,
+                                0,
+                                1
+                            ]
+                        ],
+                        [
+                            "_comment",
+                            "set current transmit index in register 0"
+                        ],
+                        [
+                            "load_imm",
+                            0,
+                            0
+                        ],
+                        [
+                            "_comment",
+                            "set end transmit index in register 1"
+                        ],
+                        [
+                            "load_imm",
+                            1,
+                            14
+                        ],
+                        [
+                            "_comment",
+                            "wait ~4 intervals -- use register 2 as scratch"
+                        ],
+                        [
+                            "load_imm",
+                            2,
+                            35
+                        ],
+                        [
+                            "set_timer",
+                            2
+                        ]
+                    ],
+                    "sender_processing_1"
+                ]
+            }
+        },
+        {
+            "id": "sender_processing_1",
+            "transitions": {
+                "on_queue_up": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "use register 2 as scratch"
+                        ],
+                        [
+                            "load_mem",
+                            2,
+                            0
+                        ],
+                        [
+                            "send_int_out",
+                            2
+                        ],
+                        [
+                            "load_imm",
+                            2,
+                            1
+                        ],
+                        [
+                            "add",
+                            0,
+                            0,
+                            2
+                        ],
+                        [
+                            "compare",
+                            0,
+                            1
+                        ]
+                    ],
+                    "sender_processing_2"
+                ],
+                "on_timer": [
+                    [
+                        "self_trigger",
+                        "on_queue_up"
+                    ],
+                    "sender_processing_1"
+                ]
+            }
+        },
+        {
+            "id": "sender_processing_2",
+            "transitions": {
+                "lt": [
+                    [
+                        "_comment",
+                        "no-op"
+                    ],
+                    "sender_processing_1"
+                ],
+                "eq": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "clean up"
+                        ],
+                        [
+                            "load_imm",
+                            2,
+                            0
+                        ],
+                        [
+                            "send_int_out",
+                            2
+                        ]
+                    ],
+                    "EMPTY"
+                ]
+            }
+        },
+        {
+            "id": "sender_output_0",
+            "transitions": {
+                "on_recv_int": [
+                    [
+                        "sequence",
+                        [
+                            "load_imm",
+                            0,
+                            1
+                        ],
+                        [
+                            "add",
+                            0,
+                            0,
+                            7
+                        ],
+                        [
+                            "set_antenna",
+                            0
+                        ],
+                        [
+                            "_comment",
+                            "store interval time in register 1"
+                        ],
+                        [
+                            "load_imm",
+                            1,
+                            10
+                        ],
+                        [
+                            "set_timer",
+                            1
+                        ]
+                    ],
+                    "sender_output_1"
+                ]
+            }
+        },
+        {
+            "id": "sender_output_1",
+            "transitions": {
+                "on_timer": [
+                    [
+                        "queue_processing"
+                    ],
+                    "sender_output_0"
+                ]
+            }
+        },
+
+        {
+            "id": "receiver_input_0",
+            "transitions": {
+                "init": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "store baseline phase angle, phase difference, and perceived frequency with the doppler effect in register 0, 4, 6"
+                        ],
+                        [
+                            "save_doppler_effect",
+                            0,
+	                        4,
+	                        6
+                        ],
+                        [
+                            "_comment",
+                            "store interval time in register 2"
+                        ],
+                        [
+                            "load_imm",
+                            1,
+                            10
+                        ],
+                        [
+                            "set_timer",
+                            1
+                        ],
+                        [
+                            "_comment",
+                            "store threshold in register 3"
+                        ],
+                        [
+                            "load_imm",
+                            2,
+                            0.0005
+                        ]
+                    ],
+                    "receiver_input_1"
+                ]
+            }
+        },
+        {
+            "id": "receiver_input_1",
+            "transitions": {
+                "on_timer": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "store read phase angle, phase difference, and perceived frequency with the doppler effect in register 3, 5, 7"
+                        ],
+                        [
+                            "save_doppler_effect",
+                            3,
+	                        5,
+	                        7
+                        ],
+                        [
+                            "sub",
+                            3,
+                            0,
+                            3
+                        ],
+                        [
+                            "abs",
+                            3
+                        ],
+                        [
+                            "compare",
+                            3,
+                            2
+                        ]
+                    ],
+                    "receiver_input_2"
+                ]
+            }
+        },
+        {
+            "id": "receiver_input_2",
+            "transitions": {
+                "lt": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "below threshold"
+                        ],
+                        [
+                            "load_imm",
+                            3,
+                            0
+                        ],
+                        [
+                            "send_bit",
+                            3
+                        ],
+                        [
+                            "set_timer",
+                            1
+                        ]
+                    ],
+                    "receiver_input_1"
+                ],
+                "eq": [
+                    [
+                        "self_trigger",
+                        "gte"
+                    ],
+                    "receiver_input_2"
+                ],
+                "gt": [
+                    [
+                        "self_trigger",
+                        "gte"
+                    ],
+                    "receiver_input_2"
+                ],
+                "gte": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "above or at threshold"
+                        ],
+                        [
+                            "load_imm",
+                            3,
+                            1
+                        ],
+                        [
+                            "send_bit",
+                            3
+                        ],
+                        [
+                            "set_timer",
+                            1
+                        ]
+                    ],
+                    "receiver_input_1"
+                ]
+            }
+        },
+        {
+            "id": "receiver_processing_0",
+            "transitions": {
+                "init": [
+                    [
+                        "sequence",
+                        [
+                            "send_str_log",
+                            "Received: "
+                        ],
+                        [
+                            "_comment",
+                            "Store remaining bits in register 0"
+                        ],
+                        [
+                            "load_imm",
+                            0,
+                            24
+                        ]
+                    ],
+                    "receiver_processing_1"
+                ]
+            }
+        },
+        {
+            "id": "receiver_processing_1",
+            "transitions": {
+                "on_recv_bit": [
+                    [
+                        "sequence",
+                        [
+                            "send_int_log",
+                            7
+                        ],
+                        [
+                            "_comment",
+                            "Use register 1 as scratch"
+                        ],
+                        [
+                            "load_imm",
+                            1,
+                            1
+                        ],
+                        [
+                            "sub",
+                            0,
+                            0,
+                            1
+                        ],
+                        [
+                            "load_imm",
+                            1,
+                            0
+                        ],
+                        [
+                            "compare",
+                            0,
+                            1
+                        ]
+                    ],
+                    "receiver_processing_2"
+                ]
+            }
+        },
+        {
+            "id": "receiver_processing_2",
+            "transitions": {
+                "eq": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "Exit"
+                        ],
+                        [
+                            "send_str_log",
+                            "\n"
+                        ]
+                    ],
+                    "EMPTY"
+                ],
+                "gt": [
+                    [
+                        "sequence",
+                        [
+                            "_comment",
+                            "Keep going"
+                        ]
+                    ],
+                    "receiver_processing_1"
+                ]
+            }
+        },
+        {
+            "id": "receiver_output_0",
+            "transitions": {
+                "init": [
+                    [
+                        "set_listen"
+                    ],
+                    "EMPTY"
+                ]
+            }
+        }
+    ]
+}

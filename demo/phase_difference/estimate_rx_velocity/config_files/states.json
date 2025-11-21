@@ -209,10 +209,10 @@
                         "sequence",
                         [
                             "_comment",
-                            "store baseline phase angle, phase difference, and perceived frequency with the doppler effect in register 0, 4, 6"
+                            "store baseline estimated receiver velocity and helper metrics in register 0, 4, 6"
                         ],
                         [
-                            "save_phase_ang_and_diff",
+                            "save_estimated_rx_velocity",
                             0,
 	                        4,
 	                        6
@@ -252,10 +252,10 @@
                         "sequence",
                         [
                             "_comment",
-                            "store read phase angle, phase difference, and perceived frequency with the doppler effect in register 3, 5, 7"
+                            "store read estimated receiver velocity and helper metrics in register 3, 5, 7"
                         ],
                         [
-                            "save_phase_ang_and_diff",
+                            "save_estimated_rx_velocity",
                             3,
 	                        5,
 	                        7
